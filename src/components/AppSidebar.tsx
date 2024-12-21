@@ -1,4 +1,4 @@
-import { LayoutDashboard, Robot, Bell, Settings, Activity, Users } from "lucide-react";
+import { LayoutDashboard, Bot, Bell, Settings, Activity, Users } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -12,7 +12,7 @@ import {
 
 const menuItems = [
   { icon: LayoutDashboard, title: "Dashboard", url: "/" },
-  { icon: Robot, title: "Robots", url: "#robots" },
+  { icon: Bot, title: "Robots", url: "#robots" },
   { icon: Activity, title: "Telemetry", url: "#telemetry" },
   { icon: Bell, title: "Alerts", url: "#alerts" },
   { icon: Users, title: "Team", url: "#team" },
