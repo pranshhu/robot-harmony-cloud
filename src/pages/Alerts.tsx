@@ -14,8 +14,8 @@ const mockAlerts = [
 
 const severityColors = {
   critical: "destructive",
-  warning: "yellow",
-  info: "blue",
+  warning: "secondary",
+  info: "default",
 } as const;
 
 const Alerts = () => {
