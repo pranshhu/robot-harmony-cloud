@@ -1,7 +1,9 @@
 import { Battery, Signal, ThermometerSun } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 interface RobotCardProps {
+  id?: string;
   name: string;
   status: "online" | "offline" | "error";
   battery: number;
@@ -9,7 +11,9 @@ interface RobotCardProps {
   signalStrength: number;
 }
 
-const RobotCard = ({ name, status, battery, temperature, signalStrength }: RobotCardProps) => {
+const RobotCard = ({ id = "1", name, status, battery, temperature, signalStrength }: RobotCardProps) => {
+  const navigate = useNavigate();
+  
   const statusColors = {
     online: "bg-green-500",
     offline: "bg-gray-500",
@@ -17,7 +21,10 @@ const RobotCard = ({ name, status, battery, temperature, signalStrength }: Robot
   };
 
   return (
-    <Card className="hover:bg-card/60 transition-colors">
+    <Card 
+      className="hover:bg-card/60 transition-colors cursor-pointer" 
+      onClick={() => navigate(`/robot/${id}`)}
+    >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">
           <div className="flex items-center gap-2">
