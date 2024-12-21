@@ -4,12 +4,14 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
-import { Battery, Cpu, Network, ThermometerSun } from "lucide-react";
+import { Battery, Cpu, Network, ThermometerSun, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const RobotDetails = () => {
   const { id } = useParams();
   const [isOn, setIsOn] = useState(true);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   // Mock data - in a real app, this would come from an API
   const robotData = {
@@ -24,18 +26,29 @@ const RobotDetails = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <AppSidebar />
-        <main className="flex-1 p-8">
+        {isSidebarVisible && <AppSidebar />}
+        <main className={`flex-1 p-8 transition-all duration-300 ${!isSidebarVisible ? 'ml-0' : ''}`}>
           <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold">{robotData.name}</h1>
               <p className="text-muted-foreground">Robot Control Interface</p>
             </div>
             <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+                className="mr-4"
+              >
+                {isSidebarVisible ? (
+                  <PanelLeftClose className="h-4 w-4" />
+                ) : (
+                  <PanelLeftOpen className="h-4 w-4" />
+                )}
+              </Button>
               <span className="text-sm text-muted-foreground">Power</span>
               <Switch checked={isOn} onCheckedChange={setIsOn} />
             </div>
-            <SidebarTrigger />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
