@@ -7,6 +7,10 @@ import { Switch } from "@/components/ui/switch";
 import { Battery, Cpu, Network, ThermometerSun, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import RobotFeeds from "@/components/RobotFeeds";
+import RobotLocation from "@/components/RobotLocation";
+import RobotDepthMap from "@/components/RobotDepthMap";
+import RobotAlerts from "@/components/RobotAlerts";
 
 const RobotDetails = () => {
   const { id } = useParams();
@@ -51,94 +55,94 @@ const RobotDetails = () => {
             </div>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card className="md:col-span-2">
-              <CardHeader>
-                <CardTitle>Live Feed</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="aspect-video bg-secondary/50 rounded-lg flex items-center justify-center">
-                  <p className="text-muted-foreground">Video feed not available in demo</p>
-                </div>
-              </CardContent>
-            </Card>
+          <div className="grid gap-6">
+            <RobotFeeds />
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <RobotLocation />
+              <RobotDepthMap />
+            </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Battery className="h-5 w-5" />
-                  Power Status
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Battery Level</span>
-                      <span className="text-sm text-muted-foreground">{robotData.battery}%</span>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Battery className="h-5 w-5" />
+                    Power Status
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">Battery Level</span>
+                        <span className="text-sm text-muted-foreground">{robotData.battery}%</span>
+                      </div>
+                      <Progress value={robotData.battery} />
                     </div>
-                    <Progress value={robotData.battery} />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <ThermometerSun className="h-5 w-5" />
-                  Temperature
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">CPU Temperature</span>
-                      <span className="text-sm text-muted-foreground">{robotData.temperature}°C</span>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <ThermometerSun className="h-5 w-5" />
+                    Temperature
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">CPU Temperature</span>
+                        <span className="text-sm text-muted-foreground">{robotData.temperature}°C</span>
+                      </div>
+                      <Progress value={(robotData.temperature / 100) * 100} />
                     </div>
-                    <Progress value={(robotData.temperature / 100) * 100} />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Cpu className="h-5 w-5" />
-                  CPU Utilization
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Usage</span>
-                      <span className="text-sm text-muted-foreground">{robotData.cpuUtilization}%</span>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Cpu className="h-5 w-5" />
+                    CPU Utilization
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">Usage</span>
+                        <span className="text-sm text-muted-foreground">{robotData.cpuUtilization}%</span>
+                      </div>
+                      <Progress value={robotData.cpuUtilization} />
                     </div>
-                    <Progress value={robotData.cpuUtilization} />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Network className="h-5 w-5" />
-                  Network Status
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Connection Speed</span>
-                    <span className="text-sm text-muted-foreground">{robotData.networkSpeed}</span>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Network className="h-5 w-5" />
+                    Network Status
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Connection Speed</span>
+                      <span className="text-sm text-muted-foreground">{robotData.networkSpeed}</span>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
+
+            <RobotAlerts />
           </div>
         </main>
       </div>
