@@ -1,17 +1,12 @@
 import { useParams } from "react-router-dom";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Switch } from "@/components/ui/switch";
-import { Battery, Cpu, Network, ThermometerSun, PanelLeftClose, PanelLeftOpen, Maximize2, Lock, Unlock } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import RobotFeeds from "@/components/RobotFeeds";
 import RobotLocation from "@/components/RobotLocation";
 import RobotDepthMap from "@/components/RobotDepthMap";
 import RobotAlerts from "@/components/RobotAlerts";
-import RobotSettings from "@/components/RobotSettings";
+import RobotControls from "@/components/RobotControls";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 
 const RobotDetails = () => {
@@ -65,43 +60,16 @@ const RobotDetails = () => {
               <h1 className="text-3xl font-bold">{robotData.name}</h1>
               <p className="text-muted-foreground">Robot Control Interface</p>
             </div>
-            <div className="flex items-center gap-4">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-              >
-                {isSidebarVisible ? (
-                  <PanelLeftClose className="h-4 w-4" />
-                ) : (
-                  <PanelLeftOpen className="h-4 w-4" />
-                )}
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setIsLayoutLocked(!isLayoutLocked)}
-              >
-                {isLayoutLocked ? (
-                  <Lock className="h-4 w-4" />
-                ) : (
-                  <Unlock className="h-4 w-4" />
-                )}
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={toggleFullscreen}
-              >
-                <Maximize2 className="h-4 w-4" />
-              </Button>
-              <RobotSettings
-                currentSettings={settings}
-                onSettingsChange={setSettings}
-              />
-              <span className="text-sm text-muted-foreground">Power</span>
-              <Switch checked={isOn} onCheckedChange={setIsOn} />
-            </div>
+            <RobotControls
+              isOn={isOn}
+              setIsOn={setIsOn}
+              isFullscreen={isFullscreen}
+              toggleFullscreen={toggleFullscreen}
+              isLayoutLocked={isLayoutLocked}
+              setIsLayoutLocked={setIsLayoutLocked}
+              settings={settings}
+              setSettings={setSettings}
+            />
           </div>
 
           <ResizablePanelGroup
