@@ -1,21 +1,39 @@
 import { useParams } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
-import { Battery, Cpu, Network, ThermometerSun, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Battery, Cpu, Network, ThermometerSun, PanelLeftClose, PanelLeftOpen, Maximize2, Lock, Unlock } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import RobotFeeds from "@/components/RobotFeeds";
 import RobotLocation from "@/components/RobotLocation";
 import RobotDepthMap from "@/components/RobotDepthMap";
 import RobotAlerts from "@/components/RobotAlerts";
+import RobotSettings from "@/components/RobotSettings";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 
 const RobotDetails = () => {
   const { id } = useParams();
   const [isOn, setIsOn] = useState(true);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [isLayoutLocked, setIsLayoutLocked] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [settings, setSettings] = useState({
+    camera1: true,
+    camera2: true,
+    camera3: true,
+    camera4: true,
+    ramUsage: true,
+    cpuUsage: true,
+    liveFeedFps: false,
+    fleetTemp: true,
+    cpuTemp: true,
+    speed: false,
+    battery: true,
+    latency: true,
+  });
 
   // Mock data - in a real app, this would come from an API
   const robotData = {
@@ -25,6 +43,16 @@ const RobotDetails = () => {
     cpuUtilization: 65,
     networkSpeed: "120 Mbps",
     status: "online" as const,
+  };
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
   };
 
   return (
@@ -42,7 +70,6 @@ const RobotDetails = () => {
                 variant="outline"
                 size="icon"
                 onClick={() => setIsSidebarVisible(!isSidebarVisible)}
-                className="mr-4"
               >
                 {isSidebarVisible ? (
                   <PanelLeftClose className="h-4 w-4" />
@@ -50,100 +77,69 @@ const RobotDetails = () => {
                   <PanelLeftOpen className="h-4 w-4" />
                 )}
               </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setIsLayoutLocked(!isLayoutLocked)}
+              >
+                {isLayoutLocked ? (
+                  <Lock className="h-4 w-4" />
+                ) : (
+                  <Unlock className="h-4 w-4" />
+                )}
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={toggleFullscreen}
+              >
+                <Maximize2 className="h-4 w-4" />
+              </Button>
+              <RobotSettings
+                currentSettings={settings}
+                onSettingsChange={setSettings}
+              />
               <span className="text-sm text-muted-foreground">Power</span>
               <Switch checked={isOn} onCheckedChange={setIsOn} />
             </div>
           </div>
 
-          <div className="grid gap-6">
-            <RobotFeeds />
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <RobotLocation />
-              <RobotDepthMap />
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Battery className="h-5 w-5" />
-                    Power Status
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">Battery Level</span>
-                        <span className="text-sm text-muted-foreground">{robotData.battery}%</span>
-                      </div>
-                      <Progress value={robotData.battery} />
-                    </div>
+          <ResizablePanelGroup
+            direction="vertical"
+            className="min-h-[800px] w-full rounded-lg border"
+          >
+            <ResizablePanel defaultSize={60}>
+              <ResizablePanelGroup direction="horizontal">
+                <ResizablePanel defaultSize={70}>
+                  <div className="p-4">
+                    <RobotFeeds />
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <ThermometerSun className="h-5 w-5" />
-                    Temperature
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">CPU Temperature</span>
-                        <span className="text-sm text-muted-foreground">{robotData.temperature}°C</span>
-                      </div>
-                      <Progress value={(robotData.temperature / 100) * 100} />
-                    </div>
+                </ResizablePanel>
+                <ResizableHandle withHandle disabled={isLayoutLocked} />
+                <ResizablePanel defaultSize={30}>
+                  <div className="p-4">
+                    <RobotAlerts />
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Cpu className="h-5 w-5" />
-                    CPU Utilization
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">Usage</span>
-                        <span className="text-sm text-muted-foreground">{robotData.cpuUtilization}%</span>
-                      </div>
-                      <Progress value={robotData.cpuUtilization} />
-                    </div>
+                </ResizablePanel>
+              </ResizablePanelGroup>
+            </ResizablePanel>
+            <ResizableHandle withHandle disabled={isLayoutLocked} />
+            <ResizablePanel defaultSize={40}>
+              <ResizablePanelGroup direction="horizontal">
+                <ResizablePanel defaultSize={50}>
+                  <div className="p-4">
+                    <RobotLocation />
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Network className="h-5 w-5" />
-                    Network Status
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium">Connection Speed</span>
-                      <span className="text-sm text-muted-foreground">{robotData.networkSpeed}</span>
-                    </div>
+                </ResizablePanel>
+                <ResizableHandle withHandle disabled={isLayoutLocked} />
+                <ResizablePanel defaultSize={50}>
+                  <div className="p-4">
+                    <RobotDepthMap />
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <RobotAlerts />
-          </div>
+                </ResizablePanel>
+              </ResizablePanelGroup>
+            </ResizablePanel>
+          </ResizablePanelGroup>
         </main>
       </div>
     </SidebarProvider>
