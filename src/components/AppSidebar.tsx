@@ -1,16 +1,16 @@
-import { LayoutDashboard, Bot, Bell, Settings, Activity, Users, ChevronDown } from "lucide-react";
+import { Bot, Bell, Settings, Activity, Users, ChevronDown, LayoutDashboard } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const menuItems = [
   { icon: LayoutDashboard, title: "Dashboard", url: "/" },
@@ -25,11 +25,10 @@ export function AppSidebar() {
   const [isNavigationVisible, setIsNavigationVisible] = useState(true);
 
   return (
-    <Sidebar>
+    <Sidebar side="right" variant="floating" collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
           <div className="flex items-center justify-between px-2">
-            <SidebarGroupLabel>Navigation</SidebarGroupLabel>
             <button
               onClick={() => setIsNavigationVisible(!isNavigationVisible)}
               className="p-1 hover:bg-accent rounded-md transition-colors"
@@ -47,12 +46,18 @@ export function AppSidebar() {
               <SidebarMenu>
                 {menuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link to={item.url} className="flex items-center gap-3">
-                        <item.icon className="h-4 w-4" />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <SidebarMenuButton asChild>
+                          <Link to={item.url} className="flex items-center justify-center">
+                            <item.icon className="h-4 w-4" />
+                          </Link>
+                        </SidebarMenuButton>
+                      </TooltipTrigger>
+                      <TooltipContent side="left">
+                        <p>{item.title}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
