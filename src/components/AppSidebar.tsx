@@ -31,7 +31,7 @@ export function AppSidebar() {
           <div className="flex items-center justify-between px-2">
             <button
               onClick={() => setIsNavigationVisible(!isNavigationVisible)}
-              className="p-1 hover:bg-accent rounded-md transition-colors"
+              className="p-1 hover:bg-accent/20 rounded-md transition-colors"
               aria-label={isNavigationVisible ? "Hide navigation" : "Show navigation"}
             >
               <ChevronDown
@@ -49,12 +49,15 @@ export function AppSidebar() {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <SidebarMenuButton asChild>
-                          <Link to={item.url} className="flex items-center justify-center">
+                          <Link 
+                            to={item.url} 
+                            className="flex items-center justify-center hover:bg-accent/20 rounded-md transition-all duration-200 hover:scale-105"
+                          >
                             <item.icon className="h-4 w-4" />
                           </Link>
                         </SidebarMenuButton>
                       </TooltipTrigger>
-                      <TooltipContent side="left">
+                      <TooltipContent side="left" className="bg-background/95 backdrop-blur-sm">
                         <p>{item.title}</p>
                       </TooltipContent>
                     </Tooltip>
