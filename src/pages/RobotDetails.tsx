@@ -32,6 +32,16 @@ const RobotDetails = () => {
     latency: true,
   });
 
+  // Mock data for the robot
+  const robotData = {
+    name: `Robot-${id}`,
+    battery: 87,
+    temperature: 42,
+    cpuUtilization: 65,
+    networkSpeed: "120 Mbps",
+    status: "online" as const,
+  };
+
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
