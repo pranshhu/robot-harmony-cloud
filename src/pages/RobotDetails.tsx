@@ -8,6 +8,8 @@ import RobotDepthMap from "@/components/RobotDepthMap";
 import RobotAlerts from "@/components/RobotAlerts";
 import RobotControls from "@/components/RobotControls";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
+import { Button } from "@/components/ui/button";
+import { Navigation, NavigationOff } from "lucide-react";
 
 const RobotDetails = () => {
   const { id } = useParams();
@@ -30,16 +32,6 @@ const RobotDetails = () => {
     latency: true,
   });
 
-  // Mock data - in a real app, this would come from an API
-  const robotData = {
-    name: `Robot-${id}`,
-    battery: 87,
-    temperature: 42,
-    cpuUtilization: 65,
-    networkSpeed: "120 Mbps",
-    status: "online" as const,
-  };
-
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -56,9 +48,23 @@ const RobotDetails = () => {
         {isSidebarVisible && <AppSidebar />}
         <main className={`flex-1 p-8 transition-all duration-300 ${!isSidebarVisible ? 'ml-0' : ''}`}>
           <div className="flex items-center justify-between mb-8">
-            <div>
-              <h1 className="text-3xl font-bold">{robotData.name}</h1>
-              <p className="text-muted-foreground">Robot Control Interface</p>
+            <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+                className="mr-4"
+              >
+                {isSidebarVisible ? (
+                  <NavigationOff className="h-4 w-4" />
+                ) : (
+                  <Navigation className="h-4 w-4" />
+                )}
+              </Button>
+              <div>
+                <h1 className="text-3xl font-bold">{robotData.name}</h1>
+                <p className="text-muted-foreground">Robot Control Interface</p>
+              </div>
             </div>
             <RobotControls
               isOn={isOn}
