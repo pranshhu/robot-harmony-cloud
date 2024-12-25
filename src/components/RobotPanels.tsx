@@ -16,13 +16,25 @@ const RobotPanels = ({ isLayoutLocked }: RobotPanelsProps) => {
     >
       <ResizablePanel defaultSize={60}>
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel defaultSize={70}>
+          <ResizablePanel defaultSize={25}>
             <div className="p-2 md:p-4">
               <RobotFeeds />
             </div>
           </ResizablePanel>
           <ResizableHandle withHandle disabled={isLayoutLocked} />
-          <ResizablePanel defaultSize={30}>
+          <ResizablePanel defaultSize={25}>
+            <div className="p-2 md:p-4">
+              <RobotFeeds />
+            </div>
+          </ResizablePanel>
+          <ResizableHandle withHandle disabled={isLayoutLocked} />
+          <ResizablePanel defaultSize={25}>
+            <div className="p-2 md:p-4">
+              <RobotFeeds />
+            </div>
+          </ResizablePanel>
+          <ResizableHandle withHandle disabled={isLayoutLocked} />
+          <ResizablePanel defaultSize={25}>
             <div className="p-2 md:p-4">
               <RobotAlerts />
             </div>
