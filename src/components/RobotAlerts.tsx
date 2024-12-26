@@ -10,9 +10,9 @@ interface Alert {
 }
 
 const mockAlerts: Alert[] = [
-  { id: 1, severity: "critical", message: "Battery level critical", timestamp: "2 minutes ago" },
-  { id: 2, severity: "warning", message: "Temperature above threshold", timestamp: "15 minutes ago" },
-  { id: 3, severity: "info", message: "Scheduled maintenance due", timestamp: "1 hour ago" },
+  { id: 1, severity: "critical", message: "Battery level critical", timestamp: "2m" },
+  { id: 2, severity: "warning", message: "Temperature above threshold", timestamp: "15m" },
+  { id: 3, severity: "info", message: "Scheduled maintenance due", timestamp: "1h" },
 ];
 
 const severityColors = {
@@ -24,27 +24,27 @@ const severityColors = {
 const RobotAlerts = () => {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <AlertCircle className="h-5 w-5" />
+      <CardHeader className="p-2">
+        <CardTitle className="flex items-center gap-2 text-sm">
+          <AlertCircle className="h-4 w-4" />
           Recent Alerts
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
+      <CardContent className="p-2">
+        <div className="space-y-2">
           {mockAlerts.map((alert) => (
             <div
               key={alert.id}
-              className="flex items-center justify-between p-4 rounded-lg border"
+              className="flex items-center justify-between p-2 rounded-lg border"
             >
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 <div className="flex items-center gap-2">
-                  <Badge variant={severityColors[alert.severity]}>
+                  <Badge variant={severityColors[alert.severity]} className="text-xs px-1 py-0">
                     {alert.severity}
                   </Badge>
-                  <span className="text-sm text-muted-foreground">{alert.timestamp}</span>
+                  <span className="text-xs text-muted-foreground">{alert.timestamp}</span>
                 </div>
-                <p className="text-sm font-medium">{alert.message}</p>
+                <p className="text-xs font-medium">{alert.message}</p>
               </div>
             </div>
           ))}
