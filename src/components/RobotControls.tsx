@@ -47,7 +47,6 @@ const RobotControls = ({
         onSettingsChange={setSettings}
         currentSettings={settings}
       />
-      <span className="text-sm text-muted-foreground">Power</span>
       <Button
         variant={isOn ? "default" : "destructive"}
         size="icon"
