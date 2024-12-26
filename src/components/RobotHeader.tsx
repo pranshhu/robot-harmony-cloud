@@ -2,7 +2,18 @@ import RobotControls from "./RobotControls";
 
 interface RobotHeaderProps {
   robotName: string;
-  controlProps: any;
+  isSidebarVisible: boolean;
+  setIsSidebarVisible: (visible: boolean) => void;
+  controlProps: {
+    isOn: boolean;
+    setIsOn: (on: boolean) => void;
+    isFullscreen: boolean;
+    toggleFullscreen: () => void;
+    isLayoutLocked: boolean;
+    setIsLayoutLocked: (locked: boolean) => void;
+    settings: any;
+    setSettings: (settings: any) => void;
+  };
 }
 
 const RobotHeader = ({
