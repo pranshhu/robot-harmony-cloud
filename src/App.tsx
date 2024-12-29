@@ -32,7 +32,7 @@ const App = () => (
             path="/"
             element={
               <ProtectedRoute>
-                <Navigate to="/dashboard" replace />
+                <Index />
               </ProtectedRoute>
             }
           />
