@@ -8,6 +8,12 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { User, LayoutDashboard, Bot, Activity, Bell, Users, Settings } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const menuItems = [
   { icon: User, title: "Profile", url: "/profile" },
@@ -23,29 +29,36 @@ export function MainSidebar() {
   const location = useLocation();
 
   return (
-    <Sidebar>
-      <SidebarHeader className="p-4">
-        <Link to="/" className="flex items-center space-x-2">
-          <img src="/placeholder.svg" alt="Logo" className="h-8 w-8" />
-          <span className="font-bold text-lg">RoboControl</span>
+    <Sidebar side="right" variant="floating" collapsible="icon">
+      <SidebarHeader className="p-2">
+        <Link to="/" className="flex items-center justify-center">
+          <img src="/placeholder.svg" alt="Logo" className="h-6 w-6" />
         </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
-          {menuItems.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton
-                asChild
-                isActive={location.pathname === item.url}
-                tooltip={item.title}
-              >
-                <Link to={item.url}>
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          <TooltipProvider delayDuration={0}>
+            {menuItems.map((item) => (
+              <SidebarMenuItem key={item.title}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={location.pathname === item.url}
+                    >
+                      <Link to={item.url} className="flex items-center justify-center">
+                        <item.icon className="h-4 w-4" />
+                        <span className="sr-only">{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </TooltipTrigger>
+                  <TooltipContent side="left">
+                    {item.title}
+                  </TooltipContent>
+                </Tooltip>
+              </SidebarMenuItem>
+            ))}
+          </TooltipProvider>
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>

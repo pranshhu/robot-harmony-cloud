@@ -26,16 +26,6 @@ const RobotDetails = () => {
     latency: true,
   });
 
-  // Mock data for the robot
-  const robotData = {
-    name: `Robot-${id}`,
-    battery: 87,
-    temperature: 42,
-    cpuUtilization: 65,
-    networkSpeed: "120 Mbps",
-    status: "online" as const,
-  };
-
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
@@ -60,19 +50,19 @@ const RobotDetails = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <MainSidebar />
         <main className="flex-1 p-4 md:p-8">
           <RobotHeader
-            robotName={robotData.name}
+            robotName={`Robot-${id}`}
             isSidebarVisible={isSidebarVisible}
             setIsSidebarVisible={setIsSidebarVisible}
             controlProps={controlProps}
           />
           <RobotPanels isLayoutLocked={isLayoutLocked} />
         </main>
+        <MainSidebar />
       </div>
     </SidebarProvider>
   );
-};
+}
 
 export default RobotDetails;
