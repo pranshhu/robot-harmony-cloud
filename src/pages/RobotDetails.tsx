@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { useState } from "react";
 import RobotHeader from "@/components/RobotHeader";
 import RobotPanels from "@/components/RobotPanels";
@@ -77,8 +77,7 @@ const RobotDetails = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <main className={`flex-1 p-4 md:p-8 transition-all duration-300 ${!isSidebarVisible ? 'ml-0' : ''}`}>
-          <div className="flex items-center space-x-2 mb-8">
-            <SidebarTrigger />
+          <div className="flex items-center justify-end mb-8">
             <nav className="flex items-center space-x-1">
               <TooltipProvider delayDuration={0}>
                 {menuItems.map((item) => (
