@@ -7,12 +7,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { User, LayoutDashboard, Robot, Activity, Bell, Users, Settings } from "lucide-react";
+import { User, LayoutDashboard, Bot, Activity, Bell, Users, Settings } from "lucide-react";
 
 const menuItems = [
   { icon: User, title: "Profile", url: "/profile" },
   { icon: LayoutDashboard, title: "Dashboard", url: "/" },
-  { icon: Robot, title: "Robots", url: "/robots" },
+  { icon: Bot, title: "Robots", url: "/robots" },
   { icon: Activity, title: "Analytics", url: "/analytics" },
   { icon: Bell, title: "Alerts", url: "/alerts" },
   { icon: Users, title: "Team", url: "/team" },
