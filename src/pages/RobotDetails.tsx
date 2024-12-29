@@ -77,7 +77,7 @@ const RobotDetails = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
         <main className={`flex-1 p-4 md:p-8 transition-all duration-300 ${!isSidebarVisible ? 'ml-0' : ''}`}>
-          <div className="flex items-center space-x-2 mb-8">
+          <div className="flex items-center justify-between mb-8">
             <SidebarTrigger />
             <nav className="flex items-center space-x-1">
               <TooltipProvider delayDuration={0}>
