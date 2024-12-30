@@ -26,10 +26,10 @@ const menuItems = [
 const PageHeader = ({ title, description }: PageHeaderProps) => {
   return (
     <SidebarProvider>
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 animate-fade-in">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
-          <p className="text-muted-foreground">{description}</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2 animate-fade-in">
+        <div className="space-y-0.5">
+          <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+          <p className="text-sm text-muted-foreground">{description}</p>
         </div>
         <nav className="flex items-center space-x-1">
           <TooltipProvider delayDuration={0}>
@@ -38,10 +38,10 @@ const PageHeader = ({ title, description }: PageHeaderProps) => {
                 <TooltipTrigger asChild>
                   <Link
                     to={item.url}
-                    className="flex items-center justify-center w-10 h-10 rounded-md hover:bg-accent transition-colors hover:scale-105 transform duration-200"
+                    className="flex items-center justify-center w-8 h-8 rounded-md hover:bg-accent transition-colors hover:scale-105 transform duration-200"
                     aria-label={item.title}
                   >
-                    <item.icon className="h-5 w-5" />
+                    <item.icon className="h-4 w-4" />
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent side="bottom" className="bg-popover/80 backdrop-blur-sm">
