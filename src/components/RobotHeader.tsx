@@ -17,15 +17,10 @@ interface RobotHeaderProps {
 }
 
 const RobotHeader = ({
-  robotName,
   controlProps,
 }: RobotHeaderProps) => {
   return (
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-      <div>
-        <h1 className="text-2xl md:text-3xl font-bold">{robotName}</h1>
-        <p className="text-muted-foreground">Robot Control Interface</p>
-      </div>
+    <div className="flex justify-end mb-4">
       <RobotControls {...controlProps} />
     </div>
   );
