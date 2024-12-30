@@ -1,59 +1,13 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
-import { Link } from "react-router-dom";
-import { LayoutDashboard, Bot, Bell, Settings as SettingsIcon, Activity, Users } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+    import { Label } from "@/components/ui/label";
+    import { Input } from "@/components/ui/input";
+    import { Switch } from "@/components/ui/switch";
+    import PageHeader from "@/components/PageHeader";
 
-const menuItems = [
-  { icon: LayoutDashboard, title: "Dashboard", url: "/" },
-  { icon: Bot, title: "Robots", url: "/robots" },
-  { icon: Activity, title: "Telemetry", url: "/telemetry" },
-  { icon: Bell, title: "Alerts", url: "/alerts" },
-  { icon: Users, title: "Team", url: "/team" },
-  { icon: SettingsIcon, title: "Settings", url: "/settings" },
-];
-
-const Settings = () => {
-  return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <main className="flex-1 p-8">
-          <div className="flex items-center space-x-2 mb-8">
-            <SidebarTrigger />
-            <nav className="flex items-center space-x-1">
-              <TooltipProvider delayDuration={0}>
-                {menuItems.map((item) => (
-                  <Tooltip key={item.title}>
-                    <TooltipTrigger asChild>
-                      <Link
-                        to={item.url}
-                        className="flex items-center justify-center w-10 h-10 rounded-md hover:bg-accent transition-colors"
-                        aria-label={item.title}
-                      >
-                        <item.icon className="h-5 w-5" />
-                      </Link>
-                    </TooltipTrigger>
-                    <TooltipContent side="bottom" className="bg-popover/80 backdrop-blur-sm">
-                      {item.title}
-                    </TooltipContent>
-                  </Tooltip>
-                ))}
-              </TooltipProvider>
-            </nav>
-          </div>
-
-          <div>
-            <h1 className="text-3xl font-bold">Settings</h1>
-            <p className="text-muted-foreground">Manage your preferences and configurations</p>
-          </div>
+    const Settings = () => {
+      return (
+        <div>
+          <PageHeader title="Settings" description="Manage your preferences and configurations" />
 
           <div className="grid gap-6 mt-8">
             <Card>
@@ -124,10 +78,8 @@ const Settings = () => {
               </CardContent>
             </Card>
           </div>
-        </main>
-      </div>
-    </SidebarProvider>
-  );
-};
+        </div>
+      );
+    };
 
-export default Settings;
+    export default Settings;

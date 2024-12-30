@@ -1,101 +1,122 @@
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Index from "./pages/Index";
-import Login from "./pages/Login";
-import Robots from "./pages/Robots";
-import RobotDetails from "./pages/RobotDetails";
-import Telemetry from "./pages/Telemetry";
-import Alerts from "./pages/Alerts";
-import Team from "./pages/Team";
-import Settings from "./pages/Settings";
+    import { Toaster as Sonner } from "@/components/ui/sonner";
+    import { TooltipProvider } from "@/components/ui/tooltip";
+    import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+    import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+    import React, { lazy, Suspense } from "react";
+    import Layout from "./components/Layout";
 
-const queryClient = new QueryClient();
+    const Index = lazy(() => import("./pages/Index.tsx"));
+    const Login = lazy(() => import("./pages/Login.tsx"));
+    const Robots = lazy(() => import("./pages/Robots.tsx"));
+    const RobotDetails = lazy(() => import("./pages/RobotDetails.tsx"));
+    const Telemetry = lazy(() => import("./pages/Telemetry.tsx"));
+    const Alerts = lazy(() => import("./pages/Alerts.tsx"));
+    const Team = lazy(() => import("./pages/Team.tsx"));
+    const Settings = lazy(() => import("./pages/Settings.tsx"));
 
-// Protected Route wrapper component
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
-};
+    const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Index />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Index />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/robots"
-            element={
-              <ProtectedRoute>
-                <Robots />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/robot/:id"
-            element={
-              <ProtectedRoute>
-                <RobotDetails />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/telemetry"
-            element={
-              <ProtectedRoute>
-                <Telemetry />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/alerts"
-            element={
-              <ProtectedRoute>
-                <Alerts />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/team"
-            element={
-              <ProtectedRoute>
-                <Team />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <Settings />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+    // Protected Route wrapper component
+    const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+      const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+      return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
+    };
 
-export default App;
+    const App = () => (
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <Layout variant="dashboard">
+                        <Index />
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Layout variant="dashboard">
+                        <Index />
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/robots"
+                  element={
+                    <ProtectedRoute>
+                      <Layout variant="robots">
+                        <Robots />
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/robot/:id"
+                  element={
+                    <ProtectedRoute>
+                      <Layout variant="robot-details">
+                        <RobotDetails />
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/telemetry"
+                  element={
+                    <ProtectedRoute>
+                      <Layout variant="default">
+                        <Telemetry />
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/alerts"
+                  element={
+                    <ProtectedRoute>
+                      <Layout variant="default">
+                        <Alerts />
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/team"
+                  element={
+                    <ProtectedRoute>
+                      <Layout variant="default">
+                        <Team />
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <ProtectedRoute>
+                      <Layout variant="default">
+                        <Settings />
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    );
+
+    export default App;
