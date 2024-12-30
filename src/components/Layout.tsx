@@ -1,5 +1,5 @@
 import React from "react";
-import { PageHeader } from "./PageHeader";
+import PageHeader from "./PageHeader";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
 interface LayoutProps {
