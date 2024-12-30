@@ -1,7 +1,8 @@
 import { RocketIcon, AlertTriangle, BatteryMedium, Wifi } from "lucide-react";
+import React from "react";
 
-const StatCard = ({ icon: Icon, label, value, change }: any) => (
-  <div className="flex items-center space-x-4 rounded-lg border p-4">
+const StatCard = React.memo(({ icon: Icon, label, value, change }: any) => (
+  <div className="flex items-center space-x-4 rounded-lg border p-4 hover:bg-accent/5 transition-colors animate-fade-in">
     <div className="bg-primary/10 p-2 rounded-full">
       <Icon className="h-5 w-5 text-primary" />
     </div>
@@ -17,7 +18,9 @@ const StatCard = ({ icon: Icon, label, value, change }: any) => (
       </div>
     </div>
   </div>
-);
+));
+
+StatCard.displayName = "StatCard";
 
 const FleetStats = () => {
   return (
@@ -50,4 +53,4 @@ const FleetStats = () => {
   );
 };
 
-export default FleetStats;
+export default React.memo(FleetStats);
