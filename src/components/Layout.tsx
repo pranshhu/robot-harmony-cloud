@@ -10,8 +10,8 @@ interface LayoutProps {
 const Layout = ({ children, variant = "default" }: LayoutProps) => {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-background">
-        <main className={`flex-1 container mx-auto p-4 md:p-8 transition-all duration-300 animate-fade-in`}>
+      <div className="flex min-h-screen w-full bg-background">
+        <main className="flex-1 container mx-auto px-4 py-2 md:px-6 md:py-4 transition-all duration-300 animate-fade-in overflow-y-auto">
           {children}
         </main>
       </div>
