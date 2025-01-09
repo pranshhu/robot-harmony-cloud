@@ -5,27 +5,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { LockKeyhole, Mail } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { login } = useAuth();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email && password) {
-      localStorage.setItem("isAuthenticated", "true");
-      toast({
-        title: "Success",
-        description: "Successfully logged in!",
-      });
+    try {
+      await login(email, password);
       navigate("/dashboard");
-    } else {
+    } catch (error) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Please fill in all fields",
+        description: "Invalid credentials",
       });
     }
   };
